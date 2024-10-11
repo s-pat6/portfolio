@@ -1,10 +1,9 @@
-/* footer.css */
-
 .footer-container {
     display: flex;
     justify-content: center;
     padding: 20px;
     background-color: #333;
+    z-index: 1;
   }
   
   .footer-container .social-icon {
@@ -19,5 +18,5 @@
   
   .footer-container .social-icon:hover svg {
     transform: scale(1.1);
-    fill: #1da1f2; /* Color change on hover */
+    fill: #1da1f2;
   }  
