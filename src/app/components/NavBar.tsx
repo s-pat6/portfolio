@@ -60,7 +60,7 @@ export default function NavBar() {
               key={id}
               href={`#${id}`}
               className={
-                `relative px-3 py-1 font-medium text-sm transition-all duration-300 text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-300`
+                `relative px-3 py-1 font-medium text-lg transition-all duration-300 text-zinc-600 dark:text-zinc-400 hover:text-pink-600 dark:hover:text-pink-300`
               }
               style={{
                 borderRadius: '0.75rem',
@@ -94,10 +94,10 @@ export default function NavBar() {
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-transparent border-none shadow-none backdrop-blur-none" style={{ background: 'transparent', boxShadow: 'none', border: 'none' }}>
-      <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
+      <div className="w-full px-[25vw] py-4 flex items-center justify-between">
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="px-5 py-2 font-bold text-lg text-zinc-900 dark:text-zinc-50 bg-transparent border-none shadow-none backdrop-blur-none hover:text-pink-600 dark:hover:text-pink-300 focus:outline-none"
+          className="px-5 py-2 font-bold text-2xl text-zinc-900 dark:text-zinc-50 bg-transparent border-none shadow-none backdrop-blur-none hover:text-pink-600 dark:hover:text-pink-300 focus:outline-none"
           style={{ background: 'transparent', boxShadow: 'none', border: 'none' }}
           aria-label="Scroll to top"
         >
