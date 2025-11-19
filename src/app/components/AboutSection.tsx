@@ -10,12 +10,22 @@ import {
   SiFirebase,
   SiDocker,
   SiPytorch,
+  SiRedis,
+  SiOpencv,
+  SiNextdotjs,
+  SiTailwindcss,
+  SiHtml5,
+  SiCss3,
+  SiGit,
+  SiGooglecloud,
 } from 'react-icons/si';
 import {
   FaJava,
   FaDatabase,
   FaAws,
   FaTerminal,
+  FaLeaf,
+  FaCode,
 } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 
@@ -45,28 +55,57 @@ interface Skill {
   name: string;
   icon: IconType;
   color: string;
+  category: 'languages' | 'frontend' | 'backend' | 'databases' | 'cloud' | 'tools';
 }
+
+const categoryBorderColors = {
+  languages: '#6BA8D1',     // Muted Blue
+  frontend: '#D494B8',      // Muted Pink
+  backend: '#D9A06F',       // Muted Orange
+  databases: '#6BA876',     // Muted Green
+  cloud: '#9B8FD4',         // Muted Purple
+  tools: '#8A909A',         // Muted Gray
+};
 
 interface Interest {
   name: string;
   emoji: string;
 }
 
-const skills: Skill[] = [
-  { name: 'C++', icon: SiCplusplus, color: '#00599C' },
-  { name: 'Python', icon: SiPython, color: '#3776AB' },
-  { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
-  { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
-  { name: 'Java', icon: FaJava, color: '#007396' },
-  { name: 'SQL', icon: FaDatabase, color: '#4479A1' },
-  { name: 'Bash', icon: FaTerminal, color: '#4EAA25' },
-  { name: 'React', icon: SiReact, color: '#61DAFB' },
-  { name: 'Node.js', icon: SiNodedotjs, color: '#339933' },
-  { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
-  { name: 'Firebase', icon: SiFirebase, color: '#FFCA28' },
-  { name: 'Docker', icon: SiDocker, color: '#2496ED' },
-  { name: 'AWS', icon: FaAws, color: '#FF9900' },
-  { name: 'PyTorch', icon: SiPytorch, color: '#EE4C2C' },
+const leftSkills: Skill[] = [
+  // Languages (Blue) - 5 skills
+  { name: 'C++', icon: SiCplusplus, color: '#00599C', category: 'languages' },
+  { name: 'Python', icon: SiPython, color: '#3776AB', category: 'languages' },
+  { name: 'Java', icon: FaJava, color: '#007396', category: 'languages' },
+  { name: 'Bash', icon: FaTerminal, color: '#4EAA25', category: 'languages' },
+  { name: 'C#', icon: FaCode, color: '#239120', category: 'languages' },
+  // Frontend (Pink) - 7 skills
+  { name: 'React', icon: SiReact, color: '#61DAFB', category: 'frontend' },
+  { name: 'Next.js', icon: SiNextdotjs, color: '#000000', category: 'frontend' },
+  { name: 'Tailwind', icon: SiTailwindcss, color: '#06B6D4', category: 'frontend' },
+  { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E', category: 'frontend' },
+  { name: 'TypeScript', icon: SiTypescript, color: '#3178C6', category: 'frontend' },
+  { name: 'HTML', icon: SiHtml5, color: '#E34C26', category: 'frontend' },
+  { name: 'CSS', icon: SiCss3, color: '#1572B6', category: 'frontend' },
+];
+
+const rightSkills: Skill[] = [
+  // Databases (Green) - 4 skills
+  { name: 'MongoDB', icon: SiMongodb, color: '#47A248', category: 'databases' },
+  { name: 'Firebase', icon: SiFirebase, color: '#FFCA28', category: 'databases' },
+  { name: 'SQL', icon: FaDatabase, color: '#4479A1', category: 'databases' },
+  { name: 'Redis', icon: SiRedis, color: '#DC382D', category: 'databases' },
+  // Backend (Orange) - 2 skills
+  { name: 'Node.js', icon: SiNodedotjs, color: '#339933', category: 'backend' },
+  { name: 'Celery', icon: FaLeaf, color: '#37B24D', category: 'backend' },
+  // Cloud (Purple) - 2 skills
+  { name: 'AWS', icon: FaAws, color: '#FF9900', category: 'cloud' },
+  { name: 'Google Cloud', icon: SiGooglecloud, color: '#4285F4', category: 'cloud' },
+  // Tools (Gray) - 4 skills
+  { name: 'Docker', icon: SiDocker, color: '#2496ED', category: 'tools' },
+  { name: 'PyTorch', icon: SiPytorch, color: '#EE4C2C', category: 'tools' },
+  { name: 'Git', icon: SiGit, color: '#F1502F', category: 'tools' },
+  { name: 'OpenCV', icon: SiOpencv, color: '#5C3EE8', category: 'tools' },
 ];
 
 const interests: Interest[] = [
@@ -88,6 +127,7 @@ interface SkillBubbleProps {
 function SkillBubble({ skill, idx, position }: SkillBubbleProps) {
   const size = 70;
   const staggerRotation = Math.sin(idx * 1.5 + (position === 'right' ? 1 : 0)) * 8;
+  const borderColor = categoryBorderColors[skill.category];
 
   return (
     <motion.div
@@ -108,11 +148,12 @@ function SkillBubble({ skill, idx, position }: SkillBubbleProps) {
       className="group relative flex justify-center z-40"
     >
       <div
-        className="flex h-full w-full items-center justify-center rounded-full border border-gray-300/50 bg-gray-300/25 shadow-xl backdrop-blur-xl transition-all dark:border-gray-500/50 dark:bg-gray-500/25"
+        className="flex h-full w-full items-center justify-center rounded-full border-2 bg-gray-300/25 shadow-xl backdrop-blur-xl transition-all dark:bg-gray-500/25"
         style={{
           width: `${size}px`,
           height: `${size}px`,
-          boxShadow: `0 8px 32px ${skill.color}30, 0 0 24px ${skill.color}15, inset 0 1px 1px rgba(255,255,255,0.2)`,
+          borderColor: borderColor,
+          boxShadow: `0 8px 32px ${skill.color}30, 0 0 24px ${skill.color}15, inset 0 1px 1px rgba(255,255,255,0.2), 0 0 12px ${borderColor}40`,
         }}
       >
         <skill.icon
@@ -179,7 +220,7 @@ export default function AboutSection() {
                   I've previously interned at <span className="font-semibold text-purple-700 dark:text-purple-400">TikHub</span> and
                   <span className="font-semibold text-purple-700 dark:text-purple-400"> Scale AI</span>.
                   My campus activities include organizing <span className="font-semibold">LA Hacks</span> on the tech team, being a
-                  <span className="font-semibold"> Dev Team Officer for ACM</span>, and an LLMs Researcher at the
+                  <span className="font-semibold"> Dev Team Officer for ACM</span>, and researching how LLMs overthink at the
                   <span className="font-semibold"> Scalable Analytics Institute Lab</span>.
                 </p>
               </div>
@@ -230,46 +271,70 @@ export default function AboutSection() {
             </motion.div>
           </div>
 
-          {/* Left Skill Bubbles - 2-3-2 Layout */}
+          {/* Left Skill Bubbles - 2-3-2-3-2 Layout */}
           <motion.div className="flex flex-col gap-6 order-1">
             {/* Row 1: 2 bubbles */}
             <div className="flex gap-4 justify-center">
-              {skills.filter((_, i) => i % 2 === 0).slice(0, 2).map((skill, idx) => (
+              {leftSkills.slice(0, 2).map((skill, idx) => (
                 <SkillBubble key={skill.name} skill={skill} idx={idx} position="left" />
               ))}
             </div>
             {/* Row 2: 3 bubbles */}
             <div className="flex gap-4 justify-center">
-              {skills.filter((_, i) => i % 2 === 0).slice(2, 5).map((skill, idx) => (
+              {leftSkills.slice(2, 5).map((skill, idx) => (
                 <SkillBubble key={skill.name} skill={skill} idx={idx + 2} position="left" />
               ))}
             </div>
             {/* Row 3: 2 bubbles */}
             <div className="flex gap-4 justify-center">
-              {skills.filter((_, i) => i % 2 === 0).slice(5, 7).map((skill, idx) => (
+              {leftSkills.slice(5, 7).map((skill, idx) => (
                 <SkillBubble key={skill.name} skill={skill} idx={idx + 5} position="left" />
+              ))}
+            </div>
+            {/* Row 4: 3 bubbles */}
+            <div className="flex gap-4 justify-center">
+              {leftSkills.slice(7, 10).map((skill, idx) => (
+                <SkillBubble key={skill.name} skill={skill} idx={idx + 7} position="left" />
+              ))}
+            </div>
+            {/* Row 5: 2 bubbles */}
+            <div className="flex gap-4 justify-center">
+              {leftSkills.slice(10, 12).map((skill, idx) => (
+                <SkillBubble key={skill.name} skill={skill} idx={idx + 10} position="left" />
               ))}
             </div>
           </motion.div>
 
-          {/* Right Skill Bubbles - 2-3-2 Layout */}
+          {/* Right Skill Bubbles - 2-3-2-3-2 Layout */}
           <motion.div className="flex flex-col gap-6 order-3">
             {/* Row 1: 2 bubbles */}
             <div className="flex gap-4 justify-center">
-              {skills.filter((_, i) => i % 2 === 1).slice(0, 2).map((skill, idx) => (
+              {rightSkills.slice(0, 2).map((skill, idx) => (
                 <SkillBubble key={skill.name} skill={skill} idx={idx} position="right" />
               ))}
             </div>
             {/* Row 2: 3 bubbles */}
             <div className="flex gap-4 justify-center">
-              {skills.filter((_, i) => i % 2 === 1).slice(2, 5).map((skill, idx) => (
+              {rightSkills.slice(2, 5).map((skill, idx) => (
                 <SkillBubble key={skill.name} skill={skill} idx={idx + 2} position="right" />
               ))}
             </div>
             {/* Row 3: 2 bubbles */}
             <div className="flex gap-4 justify-center">
-              {skills.filter((_, i) => i % 2 === 1).slice(5, 7).map((skill, idx) => (
+              {rightSkills.slice(5, 7).map((skill, idx) => (
                 <SkillBubble key={skill.name} skill={skill} idx={idx + 5} position="right" />
+              ))}
+            </div>
+            {/* Row 4: 3 bubbles */}
+            <div className="flex gap-4 justify-center">
+              {rightSkills.slice(7, 10).map((skill, idx) => (
+                <SkillBubble key={skill.name} skill={skill} idx={idx + 7} position="right" />
+              ))}
+            </div>
+            {/* Row 5: 2 bubbles */}
+            <div className="flex gap-4 justify-center">
+              {rightSkills.slice(10, 12).map((skill, idx) => (
+                <SkillBubble key={skill.name} skill={skill} idx={idx + 10} position="right" />
               ))}
             </div>
           </motion.div>
