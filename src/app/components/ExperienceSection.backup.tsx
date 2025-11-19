@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
+import { useRef } from 'react';
 
 const experiences = [
   {
@@ -28,9 +29,9 @@ const experiences = [
   },
   {
     type: 'research',
-    company: 'Scalable Analytics Institute (ScAI) Lab',
+    company: 'ScAI Lab',
     role: 'LLMs Researcher',
-    period: 'May 2025 - Present',
+    period: 'Present',
     description: 'Researching methods to evaluate overthinking in LLMs and develop a benchmark to identify prompts that induce the greatest amount of overthinking.',
     tags: ['LLMs', 'AI/ML', 'Research'],
   },
@@ -54,15 +55,26 @@ const experiences = [
 
 interface ExperienceCardProps {
   exp: typeof experiences[0];
+  progress: any;
+  range: number[];
+  targetScale: number;
 }
 
-function ExperienceCard({ exp }: ExperienceCardProps) {
+function ExperienceCard({ exp, progress, range, targetScale }: ExperienceCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Calculate scale based on scroll progress
+  const scale = useTransform(progress, range, [1, targetScale]);
+  const opacity = useTransform(progress, range, [1, 0.6]);
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, margin: '-100px' }}
-      transition={{ duration: 0.5 }}
+      ref={cardRef}
+      style={{
+        scale,
+        opacity,
+      }}
+      className="w-full"
     >
       <div
         className="group relative rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-indigo-500/10 to-purple-500/5 p-6 shadow-lg backdrop-blur-sm dark:border-indigo-500/30 dark:from-indigo-500/15 dark:to-purple-500/10 transition-all"
@@ -90,7 +102,7 @@ function ExperienceCard({ exp }: ExperienceCardProps) {
                       ? '/LAHacks.png'
                       : '/ACM.png'
                     : exp.type === 'research'
-                    ? exp.company === 'Scalable Analytics Institute (ScAI) Lab'
+                    ? exp.company === 'ScAI Lab'
                       ? '/UCLA-square-logo.jpg'
                       : '/UTAustin.png'
                     : exp.company === 'TikHub'
@@ -130,23 +142,47 @@ function ExperienceCard({ exp }: ExperienceCardProps) {
   );
 }
 
-interface ExperienceGroupProps {
+interface SectionCardsProps {
   title: string;
   experiences: typeof experiences;
 }
 
-function ExperienceGroup({ title, experiences: sectionExperiences }: ExperienceGroupProps) {
+function SectionCards({ title, experiences: sectionExperiences }: SectionCardsProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Track scroll progress for this section
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const numCards = sectionExperiences.length;
+
   return (
-    <div className="h-screen snap-center flex flex-col items-center justify-center px-6 overflow-hidden">
-      <div className="flex flex-col items-center gap-6 w-full max-h-[90vh] overflow-y-auto">
-        <h3 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 text-center flex-shrink-0">
+    <div ref={sectionRef} className="relative h-[200vh]">
+      <div className="sticky top-20 h-screen flex flex-col items-center justify-start pt-12 pb-24">
+        <h3 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-8 text-center">
           {title}
         </h3>
 
-        <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 flex-shrink-0">
-          {sectionExperiences.map((exp) => (
-            <ExperienceCard key={`${exp.type}-${exp.company}`} exp={exp} />
-          ))}
+        <div className="w-full max-w-5xl px-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {sectionExperiences.map((exp, idx) => {
+            // Calculate scroll ranges for each card
+            const cardStart = idx / numCards;
+            const cardEnd = (idx + 1) / numCards;
+            const targetScale = 1 - (numCards - idx) * 0.05;
+
+            return (
+              <div key={idx} className="relative" style={{ zIndex: numCards - idx }}>
+                <ExperienceCard
+                  exp={exp}
+                  progress={scrollYProgress}
+                  range={[cardStart, cardEnd]}
+                  targetScale={targetScale}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -173,10 +209,10 @@ export default function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="relative"
+      className="relative snap-start scroll-mt-20 bg-white dark:bg-zinc-950"
     >
-      {/* Sticky Header */}
-      <div className="sticky top-20 z-40 w-full bg-white/80 dark:bg-zinc-950/80 backdrop-blur-sm border-b border-zinc-200 dark:border-zinc-800 py-6">
+      {/* Fixed Header */}
+      <div className="sticky top-20 z-30 w-full bg-white/80 dark:bg-zinc-950/80 backdrop-blur-sm py-8">
         <h2
           className="text-center text-4xl font-bold text-zinc-900 dark:text-zinc-50 sm:text-5xl"
           style={{
@@ -187,14 +223,17 @@ export default function ExperienceSection() {
         </h2>
       </div>
 
-      {/* Experience Groups */}
+      {/* Sections with stacking cards */}
       {sections.map((section) => (
-        <ExperienceGroup
+        <SectionCards
           key={section.title}
           title={section.title}
           experiences={section.experiences}
         />
       ))}
+
+      {/* Spacer for last section */}
+      <div className="h-screen"></div>
     </section>
   );
 }

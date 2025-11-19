@@ -60,6 +60,17 @@ body {
   }
 }
 
+/* Stacking cards container */
+[data-cards-wrapper] {
+  position: relative;
+}
+
+[data-card] {
+  /* Sticky positioning - no snapping, let Intersection Observer handle animations */
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+  transform-origin: center;
+}
+
 .hero-glow {
   animation: glow 3s ease-in-out infinite;
   will-change: filter;
