@@ -65,7 +65,7 @@ function ExperienceCard({ exp }: ExperienceCardProps) {
       transition={{ duration: 0.5 }}
     >
       <div
-        className="group relative rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-indigo-500/10 to-purple-500/5 p-8 shadow-lg backdrop-blur-sm dark:border-indigo-500/30 dark:from-indigo-500/15 dark:to-purple-500/10 transition-all"
+        className="group relative rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-indigo-500/10 to-purple-500/5 p-12 shadow-lg backdrop-blur-sm dark:border-indigo-500/30 dark:from-indigo-500/15 dark:to-purple-500/10 transition-all"
         style={{
           boxShadow: '0 12px 50px rgba(99, 102, 241, 0.1), 0 0 40px rgba(99, 102, 241, 0.05)',
         }}
@@ -74,10 +74,10 @@ function ExperienceCard({ exp }: ExperienceCardProps) {
 
         <div className="relative z-10">
           {/* Header with Logo and Info */}
-          <div className="flex gap-4 mb-4">
+          <div className="flex gap-6 mb-6">
             {/* Logo Spot */}
             <div
-              className={`flex-shrink-0 h-24 w-24 rounded-2xl border border-indigo-400/30 dark:border-indigo-500/40 flex items-center justify-center overflow-hidden ${
+              className={`flex-shrink-0 h-36 w-36 rounded-2xl border border-indigo-400/30 dark:border-indigo-500/40 flex items-center justify-center overflow-hidden ${
                 exp.company === 'UT Austin Swarm Nanorobotics Lab'
                   ? 'bg-[#BF5700]'
                   : 'bg-gradient-to-br from-indigo-400/20 to-purple-400/20'
@@ -98,8 +98,8 @@ function ExperienceCard({ exp }: ExperienceCardProps) {
                     : '/ScaleAI.png'
                 }
                 alt={exp.company}
-                width={96}
-                height={96}
+                width={144}
+                height={144}
                 className={`w-full h-full ${
                   exp.company === 'UT Austin Swarm Nanorobotics Lab' ? 'object-contain' : 'object-cover'
                 }`}
@@ -108,20 +108,20 @@ function ExperienceCard({ exp }: ExperienceCardProps) {
 
             {/* Title and Period on the Right */}
             <div className="flex-1 min-w-0">
-              <h4 className="text-lg font-bold text-zinc-950 dark:text-zinc-50 mb-1">
+              <h4 className="text-xl font-bold text-zinc-950 dark:text-zinc-50 mb-1">
                 {exp.company}
               </h4>
-              <p className="text-xs font-medium text-indigo-600/70 dark:text-indigo-400/70 mb-2">
+              <p className="text-sm font-medium text-indigo-600/70 dark:text-indigo-400/70 mb-2">
                 {exp.period}
               </p>
-              <p className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+              <p className="text-base font-semibold text-zinc-700 dark:text-zinc-300">
                 {exp.role}
               </p>
             </div>
           </div>
 
           {/* Description Below */}
-          <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+          <p className="text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
             {exp.description}
           </p>
         </div>
@@ -143,7 +143,7 @@ function ExperienceGroup({ title, experiences: sectionExperiences }: ExperienceG
           {title}
         </h3>
 
-        <div className="w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-8 flex-shrink-0">
+        <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-10 flex-shrink-0">
           {sectionExperiences.map((exp) => (
             <ExperienceCard key={`${exp.type}-${exp.company}`} exp={exp} />
           ))}

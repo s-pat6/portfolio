@@ -206,15 +206,15 @@ export default function AboutSection() {
             {/* About Text */}
             <motion.div
               variants={itemVariants}
-              className="relative z-20 rounded-3xl border-2 border-blue-200 bg-gradient-to-br from-blue-100/80 via-white to-indigo-100/80 p-8 shadow-2xl backdrop-blur-md dark:border-blue-800/50 dark:from-blue-950/95 dark:via-zinc-900/95 dark:to-indigo-950/95 w-full"
+              className="relative z-20 rounded-3xl border-2 border-indigo-200 bg-gradient-to-br from-indigo-100/80 via-white to-purple-100/80 p-8 shadow-2xl backdrop-blur-md dark:border-indigo-800/50 dark:from-indigo-950/95 dark:via-zinc-900/95 dark:to-purple-950/95 w-full"
               style={{
-                boxShadow: '0 20px 60px rgba(59, 130, 246, 0.2), 0 0 40px rgba(99, 102, 241, 0.1)',
+                boxShadow: '0 20px 60px rgba(139, 92, 246, 0.2), 0 0 40px rgba(99, 102, 241, 0.1)',
               }}
             >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-400/10 via-transparent to-indigo-400/10 dark:from-blue-500/10 dark:to-indigo-500/10"></div>
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-indigo-400/10 via-transparent to-purple-400/10 dark:from-indigo-500/10 dark:to-purple-500/10"></div>
               <div className="relative z-10">
                 <p className="text-lg leading-8 text-zinc-800 dark:text-zinc-300">
-                  I'm a <span className="font-semibold text-blue-700 dark:text-blue-400">Computer Science student at UCLA </span>
+                  I'm a <span className="font-semibold text-indigo-700 dark:text-indigo-400">Computer Science student at UCLA </span>
                   exploring my interests within software development, particularly in <span className="font-semibold">fullstack development</span> and
                   <span className="font-semibold"> distributed systems</span>.
                   I've previously interned at <span className="font-semibold text-purple-700 dark:text-purple-400">TikHub</span> and
